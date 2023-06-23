@@ -1,0 +1,17 @@
+Black:
+#000000
+
+Dark Purple:
+#310063
+
+Medium Purple:
+#63359c
+
+Light Purple:
+#9c65ce
+
+Pink:
+#ce9ace
+
+White:
+#FFFFFF
