@@ -14,12 +14,12 @@ namespace Beans
         
         private void OnEnable()
         {
-            BeanCollision.OnBeanShouldStopCollision += DisableMovement;
+            Fall.OnBeanShouldStopCollision += DisableMovement;
         }
         
         private void OnDisable()
         {
-            BeanCollision.OnBeanShouldStopCollision -= DisableMovement;
+            Fall.OnBeanShouldStopCollision -= DisableMovement;
         }
         
         private void DisableMovement()

@@ -6,12 +6,12 @@ namespace Beans
    public class Fall : MonoBehaviour
    {
       [SerializeField] private float speed = 1f;
-      [SerializeField] private float softFallSpeed = 1f;
-      [SerializeField] private float hardFallSpeed = 1f;
+      [SerializeField] private float softMoveDelay = 1f;
+      [SerializeField] private float hardMoveDelay = 1f;
       [SerializeField] private bool isFalling = false;
       [SerializeField] private float moveDelay = 1f;
       private float _timer = 0f;
-      private float _startingSpeed;
+      private float _startingMoveDelay;
       private Bean _bean;
       
       public static UnityAction OnBeanShouldStopCollision;
@@ -23,7 +23,7 @@ namespace Beans
       
       private void Start()
       {
-         _startingSpeed = speed;
+         _startingMoveDelay = moveDelay;
       }
 
       [ContextMenu("Start Falling")]
@@ -46,22 +46,21 @@ namespace Beans
 
          if (Input.GetKey(KeyCode.DownArrow))
          {
-            speed = softFallSpeed;
+            moveDelay = softMoveDelay;
          }
          else if (Input.GetKey(KeyCode.Space))
          {
-            speed = hardFallSpeed;
+            moveDelay = hardMoveDelay;
          }
          else
          {
-            speed = _startingSpeed;
+            moveDelay = _startingMoveDelay;
          }
 
          if (_timer >= moveDelay)
          {
             Vector2[] oldPositions = _bean.GetCurrentChildBeanPositions();
 
-            // transform.Translate(Vector3.down * speed);
             transform.position += Vector3.down * speed;
             
             if (_bean.IsNewPositionValidGridPosition())
@@ -70,7 +69,6 @@ namespace Beans
             }
             else
             {
-               transform.Translate(Vector3.up * speed);
                transform.position += Vector3.up * speed;
                OnBeanShouldStopCollision?.Invoke();
                StopFalling();

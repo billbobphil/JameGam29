@@ -7,6 +7,8 @@ TagManager:
   - Floor
   - Bean
   - PlayGrid
+  - Lid
+  - Overseer
   layers:
   - Default
   - TransparentFX

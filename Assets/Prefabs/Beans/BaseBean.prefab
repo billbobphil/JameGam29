@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4284212094503603958}
   - component: {fileID: 1091139952676601555}
   - component: {fileID: 6975134765094005901}
-  - component: {fileID: -7544895702382785767}
   - component: {fileID: -7203150177666981292}
   m_Layer: 0
   m_Name: BaseBean
@@ -29,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6138956116366330026}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -50,9 +49,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  softFallSpeed: 1
-  hardFallSpeed: 1
-  isFalling: 1
+  softMoveDelay: 0.2
+  hardMoveDelay: 0.03
+  isFalling: 0
   moveDelay: 1
 --- !u!114 &1091139952676601555
 MonoBehaviour:
@@ -77,18 +76,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb3c9c8612a1e6a458875df2c7d63f12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &-7544895702382785767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6138956116366330026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da7a3e14f96dce844b57818402e81adc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &-7203150177666981292

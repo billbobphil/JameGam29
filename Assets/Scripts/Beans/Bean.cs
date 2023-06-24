@@ -8,6 +8,31 @@ namespace Beans
     public class Bean : MonoBehaviour
     {
         private PlayGrid _gridBrain;
+        private bool _isActiveBean = true;
+
+        private void OnEnable()
+        {
+            Fall.OnBeanShouldStopCollision += StoreBeanReference;
+            Fall.OnBeanShouldStopCollision += MarkBeanInactive;
+        }
+        
+        private void OnDisable()
+        {
+            Fall.OnBeanShouldStopCollision -= StoreBeanReference;
+            Fall.OnBeanShouldStopCollision -= MarkBeanInactive;
+        }
+        
+        private void StoreBeanReference()
+        {
+            if (!_isActiveBean) return;
+            
+            GameObject.FindWithTag("Overseer").GetComponent<KeeperTracker>().beans.Add(this);
+        }
+
+        private void MarkBeanInactive()
+        {
+            _isActiveBean = false;
+        }
 
         private void Awake()
         {
@@ -29,6 +54,13 @@ namespace Beans
             }
 
             return true;
+        }
+
+        public void MoveRight(int distance)
+        {
+            Vector2[] oldPositions = GetCurrentChildBeanPositions();
+            transform.position += Vector3.right * distance;
+            UpdateGridPosition(oldPositions);
         }
 
         public void UpdateGridPosition(Vector2[] oldPositions)
