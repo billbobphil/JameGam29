@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using Beans;
@@ -42,8 +43,14 @@ namespace Logic
         {
             GameObject bean = Instantiate(beanPrefabs[Random.Range(0, beanPrefabs.Count)]);
             bean.transform.position = new Vector2(_xPositionRounded, _yPositionRounded);
-            bean.GetComponent<Fall>().StartFalling();
+            StartCoroutine(WaitToTriggerSpawnBehavior(bean));
+        }
+        
+        private IEnumerator WaitToTriggerSpawnBehavior(GameObject createdBean)
+        {
+            yield return new WaitForSeconds(1f);
             BeanSpawned?.Invoke();
+            createdBean.GetComponent<Fall>().StartFalling();
         }
     }
 }
