@@ -9,6 +9,7 @@ namespace BeanCans
     {
         private PlayGrid _playGrid;
         public int width;
+        public int height;
         
         private void Awake()
         {

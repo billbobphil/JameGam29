@@ -2,6 +2,7 @@ using System;
 using Helpers;
 using Logic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Beans
 {
@@ -9,6 +10,8 @@ namespace Beans
     {
         private PlayGrid _gridBrain;
         private bool _isActiveBean = true;
+
+        public static UnityAction BeanEnteredDeathPlane;
 
         private void OnEnable()
         {
@@ -22,6 +25,11 @@ namespace Beans
             Fall.OnBeanShouldStopCollision -= MarkBeanInactive;
         }
         
+        private void Awake()
+        {
+            _gridBrain = GameObject.FindWithTag("PlayGrid").GetComponent<PlayGrid>();
+        }
+        
         private void StoreBeanReference()
         {
             if (!_isActiveBean) return;
@@ -32,11 +40,6 @@ namespace Beans
         private void MarkBeanInactive()
         {
             _isActiveBean = false;
-        }
-
-        private void Awake()
-        {
-            _gridBrain = GameObject.FindWithTag("PlayGrid").GetComponent<PlayGrid>();
         }
 
         public bool IsNewPositionValidGridPosition()
@@ -65,16 +68,21 @@ namespace Beans
 
         public void UpdateGridPosition(Vector2[] oldPositions)
         {
-            foreach (Vector2 oldPosition in oldPositions)
-            {
-                Vector2 oldPositionRounded = RoundVector2.Round(oldPosition);
-                _gridBrain.Grid[(int)oldPositionRounded.x, (int)oldPositionRounded.y] = null;
-            }
+            ClearBeanGridPositions(oldPositions);
             
             foreach (Transform child in transform)
             {
                 Vector2 newPositionRounded = RoundVector2.Round(child.position);
                 _gridBrain.Grid[(int)newPositionRounded.x, (int)newPositionRounded.y] = child;
+            }
+        }
+
+        private void ClearBeanGridPositions(Vector2[] positions)
+        {
+            foreach (Vector2 oldPosition in positions)
+            {
+                Vector2 oldPositionRounded = RoundVector2.Round(oldPosition);
+                _gridBrain.Grid[(int)oldPositionRounded.x, (int)oldPositionRounded.y] = null;
             }
         }
 
@@ -87,6 +95,17 @@ namespace Beans
             }
 
             return positions;
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("DeathPlane"))
+            {
+                Debug.Log("Hit Death Plane");
+                BeanEnteredDeathPlane?.Invoke();
+                ClearBeanGridPositions(GetCurrentChildBeanPositions());
+                Destroy(gameObject);
+            }
         }
     }
 }

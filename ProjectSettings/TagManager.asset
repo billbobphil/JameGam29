@@ -9,6 +9,10 @@ TagManager:
   - PlayGrid
   - Lid
   - Overseer
+  - CanSpawnZone
+  - DeathPlane
+  - CanAbductionZone
+  - BeanTile
   layers:
   - Default
   - TransparentFX

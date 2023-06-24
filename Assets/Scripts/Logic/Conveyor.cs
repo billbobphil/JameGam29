@@ -56,15 +56,17 @@ namespace Logic
         {
             int distanceToMove = moveDistance * _timesToMove;
             
+            foreach(BeanCan beanCan in _keeperTracker.beanCans)
+            {
+                beanCan.MoveRight(distanceToMove);
+            }
+            
             foreach (Bean bean in _keeperTracker.beans)
             {
                 bean.MoveRight(distanceToMove);
             }
                 
-            foreach(BeanCan beanCan in _keeperTracker.beanCans)
-            {
-                beanCan.MoveRight(distanceToMove);
-            }
+           
         }
     }
 }

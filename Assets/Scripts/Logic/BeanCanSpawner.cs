@@ -11,6 +11,16 @@ namespace Logic
         private int _roundedSpawnerPositionX;
         private int _roundedSpawnerPositionY;
         
+        private void OnEnable()
+        {
+            BeanCanCenter.BeanCanSpawnTrigger += SpawnBeanCan;
+        }
+        
+        private void OnDisable()
+        {
+            BeanCanCenter.BeanCanSpawnTrigger -= SpawnBeanCan;
+        }
+        
         private void Start()
         {
             Vector2 roundedPosition = RoundVector2.Round(transform.position);

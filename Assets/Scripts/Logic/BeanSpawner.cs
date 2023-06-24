@@ -23,11 +23,13 @@ namespace Logic
         private void OnEnable()
         {
             Fall.OnBeanShouldStopCollision += Spawn;
+            Bean.BeanEnteredDeathPlane += Spawn;
         }
         
         private void OnDisable()
         {
             Fall.OnBeanShouldStopCollision -= Spawn;
+            Bean.BeanEnteredDeathPlane -= Spawn;
         }
         
         private void Start()
