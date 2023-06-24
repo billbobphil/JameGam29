@@ -2,6 +2,7 @@ using System;
 using BeanCans;
 using Beans;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Logic
 {
@@ -13,6 +14,8 @@ namespace Logic
         private PlayGrid _grid;
         private KeeperTracker _keeperTracker;
         private int _timesToMove = 0;
+        
+        public static UnityAction ConveyorMoved;
 
         private void OnEnable()
         {
@@ -54,6 +57,7 @@ namespace Logic
         [ContextMenu("Move Conveyor")]
         private void MoveConveyor()
         {
+            ConveyorMoved?.Invoke();
             int distanceToMove = moveDistance * _timesToMove;
             
             foreach(BeanCan beanCan in _keeperTracker.beanCans)
@@ -65,8 +69,6 @@ namespace Logic
             {
                 bean.MoveRight(distanceToMove);
             }
-                
-           
         }
     }
 }

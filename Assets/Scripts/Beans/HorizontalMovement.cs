@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace Beans
@@ -8,6 +9,8 @@ namespace Beans
         [SerializeField] private float speed = 1f;
         private bool _isEnabled = true;
         private Bean _bean;
+
+        public static UnityAction BeanMovedHorizontally;
         
         private void Awake()
         {
@@ -53,6 +56,7 @@ namespace Beans
             if (_bean.IsNewPositionValidGridPosition())
             {
                 _bean.UpdateGridPosition(oldPositions);
+                BeanMovedHorizontally?.Invoke();
             }
             else
             {

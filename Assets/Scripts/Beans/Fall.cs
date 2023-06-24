@@ -15,6 +15,7 @@ namespace Beans
       private Bean _bean;
       
       public static UnityAction OnBeanShouldStopCollision;
+      public static UnityAction BeanMovedVertically;
       
       private void Awake()
       {
@@ -66,6 +67,7 @@ namespace Beans
             if (_bean.IsNewPositionValidGridPosition())
             {
                _bean.UpdateGridPosition(oldPositions);
+               BeanMovedVertically?.Invoke();
             }
             else
             {

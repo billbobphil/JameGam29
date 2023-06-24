@@ -101,7 +101,6 @@ namespace Beans
         {
             if (other.CompareTag("DeathPlane"))
             {
-                Debug.Log("Hit Death Plane");
                 BeanEnteredDeathPlane?.Invoke();
                 ClearBeanGridPositions(GetCurrentChildBeanPositions());
                 Destroy(gameObject);

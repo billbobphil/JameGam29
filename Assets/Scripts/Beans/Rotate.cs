@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Beans
 {
@@ -6,6 +7,8 @@ namespace Beans
     {
         private bool _isEnabled = true;
         private Bean _bean;
+
+        public static UnityAction BeanRotated;
         
         private void Awake()
         {
@@ -51,6 +54,7 @@ namespace Beans
             if (_bean.IsNewPositionValidGridPosition())
             {
                 _bean.UpdateGridPosition(oldPositions);
+                BeanRotated?.Invoke();
             }
             else
             {
