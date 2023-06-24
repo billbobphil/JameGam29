@@ -12,16 +12,16 @@ namespace Logic
         private float _timer = 0f;
         private PlayGrid _grid;
         private KeeperTracker _keeperTracker;
-        private bool _shouldMove;
+        private int _timesToMove = 0;
 
         private void OnEnable()
         {
-            Fall.OnBeanShouldStopCollision += SetShouldMoveConveyor;
+            BeanSpawner.BeanSpawned += DecideIfConveyorShouldMove;
         }
         
         private void OnDisable()
         {
-            Fall.OnBeanShouldStopCollision -= SetShouldMoveConveyor;
+            BeanSpawner.BeanSpawned -= DecideIfConveyorShouldMove;
         }
 
         private void Awake()
@@ -30,35 +30,40 @@ namespace Logic
             _keeperTracker = GameObject.FindWithTag("Overseer").GetComponent<KeeperTracker>();
         }
 
-        private void SetShouldMoveConveyor()
+        private void DecideIfConveyorShouldMove()
         {
-            _shouldMove = true;
+            if (_timesToMove > 0)
+            {
+                MoveConveyor();
+                _timer = 0f;
+                _timesToMove = 0;
+            }
         }
 
         private void Update()
         {
             _timer += Time.deltaTime;
 
-            if (_timer >= moveDelay && _shouldMove)
+            if (_timer >= moveDelay)
             {
-               MoveConveyor();
-
+                _timesToMove++;
                 _timer = 0f;
-                _shouldMove = false;
             }
         }
 
         [ContextMenu("Move Conveyor")]
         private void MoveConveyor()
         {
+            int distanceToMove = moveDistance * _timesToMove;
+            
             foreach (Bean bean in _keeperTracker.beans)
             {
-                bean.MoveRight(moveDistance);
+                bean.MoveRight(distanceToMove);
             }
                 
             foreach(BeanCan beanCan in _keeperTracker.beanCans)
             {
-                beanCan.MoveRight(moveDistance);
+                beanCan.MoveRight(distanceToMove);
             }
         }
     }

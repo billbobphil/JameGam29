@@ -3,6 +3,8 @@ using System.Numerics;
 using Beans;
 using Helpers;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
 using Vector2 = UnityEngine.Vector2;
 
 namespace Logic
@@ -11,7 +13,9 @@ namespace Logic
     {
         [SerializeField]
         private List<GameObject> beanPrefabs;
-
+        public static UnityAction BeanSpawned;
+        public Conveyor conveyor;
+        
         private int _xPositionRounded = 0;
         private int _yPositionRounded = 0;
     
@@ -39,6 +43,7 @@ namespace Logic
             GameObject bean = Instantiate(beanPrefabs[Random.Range(0, beanPrefabs.Count)]);
             bean.transform.position = new Vector2(_xPositionRounded, _yPositionRounded);
             bean.GetComponent<Fall>().StartFalling();
+            BeanSpawned?.Invoke();
         }
     }
 }
