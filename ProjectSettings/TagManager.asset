@@ -13,6 +13,7 @@ TagManager:
   - DeathPlane
   - CanAbductionZone
   - BeanTile
+  - Music
   layers:
   - Default
   - TransparentFX
