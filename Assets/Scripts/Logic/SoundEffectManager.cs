@@ -1,5 +1,6 @@
 ﻿using Beans;
 using UnityEngine;
+using Utilities;
 
 namespace Logic
 {
@@ -12,6 +13,7 @@ namespace Logic
         [SerializeField] private AudioSource conveyorMoveAudioSource;
         [SerializeField] private AudioSource beanMoveAudioSource;
         [SerializeField] private AudioSource beanCanSpawnAudioSource;
+        [SerializeField] private AudioSource timerEndAudioSource;
         
         private void OnEnable()
         {
@@ -23,6 +25,7 @@ namespace Logic
             Conveyor.ConveyorMoved += PlayConveyorMoveSound;
             HorizontalMovement.BeanMovedHorizontally += PlayBeanMoveSound;
             BeanCanSpawner.BeanCanSpawned += PlayBeanCanSpawnSound;
+            Timer.TimerExpired += PlayTimerEndSound;
         }
         
         private void OnDisable()
@@ -35,6 +38,7 @@ namespace Logic
             HorizontalMovement.BeanMovedHorizontally -= PlayBeanMoveSound;
             Fall.BeanMovedVertically -= PlayBeanMoveSound;
             BeanCanSpawner.BeanCanSpawned -= PlayBeanCanSpawnSound;
+            Timer.TimerExpired -= PlayTimerEndSound;
         }
         
         private void PlayBeanRotateSound()
@@ -70,6 +74,11 @@ namespace Logic
         private void PlayBeanCanSpawnSound()
         {
             beanCanSpawnAudioSource.Play();
+        }
+        
+        private void PlayTimerEndSound()
+        {
+            timerEndAudioSource.Play();
         }
     }
 }
