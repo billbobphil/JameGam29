@@ -1,6 +1,8 @@
+using Logic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
+using Utilities;
 
 namespace Beans
 {
@@ -11,7 +13,7 @@ namespace Beans
         private Bean _bean;
 
         public static UnityAction BeanMovedHorizontally;
-        
+
         private void Awake()
         {
             _bean = GetComponent<Bean>();
@@ -20,11 +22,13 @@ namespace Beans
         private void OnEnable()
         {
             Fall.OnBeanShouldStopCollision += DisableMovement;
+            Timer.TimerExpired += DisableMovement;
         }
         
         private void OnDisable()
         {
             Fall.OnBeanShouldStopCollision -= DisableMovement;
+            Timer.TimerExpired -= DisableMovement;
         }
         
         private void DisableMovement()

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using Utilities;
 
 namespace Beans
 {
@@ -18,11 +19,13 @@ namespace Beans
         private void OnEnable()
         {
             Fall.OnBeanShouldStopCollision += DisableMovement;
+            Timer.TimerExpired += DisableMovement;
         }
         
         private void OnDisable()
         {
             Fall.OnBeanShouldStopCollision -= DisableMovement;
+            Timer.TimerExpired -= DisableMovement;
         }
         
         private void DisableMovement()

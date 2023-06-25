@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using Utilities;
 
 namespace Logic
@@ -6,6 +7,15 @@ namespace Logic
     public class TimerManager : MonoBehaviour
     {
         [SerializeField] private Timer timer;
+        //Putting these here is wrong wrong wrong
+        [SerializeField] private GameObject endGamePanel;
+        [SerializeField] private TextMeshProUGUI endGameScoreText;
+
+        private void Awake()
+        {
+            endGamePanel.SetActive(false);
+            Time.timeScale = 1;
+        }
         
         private void OnEnable()
         {
@@ -26,6 +36,9 @@ namespace Logic
         {
             timer.StopTimer();
             Debug.Log("Timer expired");
+            endGamePanel.SetActive(true);
+            Time.timeScale = 0;
+            endGameScoreText.text = GetComponent<Scorer>().GetCurrentScore().ToString();
         }
     }
 }
