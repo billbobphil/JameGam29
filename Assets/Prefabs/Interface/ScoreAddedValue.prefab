@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   xTravelDistance: 0
-  yTravelDistance: 0.5
-  floatTimeBeforeDestroy: 2
+  yTravelDistance: 0.35
+  floatTimeBeforeDestroy: 3
   floatDirection: 1
   shouldDestroySelf: 1

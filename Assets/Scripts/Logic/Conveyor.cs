@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using BeanCans;
 using Beans;
 using UnityEngine;
@@ -14,6 +15,10 @@ namespace Logic
         private PlayGrid _grid;
         private KeeperTracker _keeperTracker;
         private int _timesToMove = 0;
+        [SerializeField] private SpriteRenderer conveyorOneSpriteRenderer;
+        [SerializeField] private SpriteRenderer conveyorTwoSpriteRenderer;
+        private int _conveyorSpriteIndex = 1;
+        [SerializeField] private List<Sprite> conveyorSprites;
         
         public static UnityAction ConveyorMoved;
 
@@ -58,6 +63,20 @@ namespace Logic
         private void MoveConveyor()
         {
             ConveyorMoved?.Invoke();
+            
+            if (_conveyorSpriteIndex == 0)
+            {
+                conveyorOneSpriteRenderer.sprite = conveyorSprites[0];
+                conveyorTwoSpriteRenderer.sprite = conveyorSprites[0];
+                _conveyorSpriteIndex = 1;
+            }
+            else
+            {
+                conveyorOneSpriteRenderer.sprite = conveyorSprites[1];
+                conveyorTwoSpriteRenderer.sprite = conveyorSprites[1];
+                _conveyorSpriteIndex = 0;
+            }
+            
             int distanceToMove = moveDistance * _timesToMove;
             
             foreach(BeanCan beanCan in _keeperTracker.beanCans)
